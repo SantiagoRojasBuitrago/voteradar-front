@@ -27,8 +27,8 @@
             placeholder="Seleccione puesto"
             formControlName="puestos"
             [clearAllText]="'Borrar todo'"
-          >
-          </ng-select>
+          ></ng-select>
+
         </div>
       </form>
     </div>
@@ -42,6 +42,7 @@
         <table class="table text-center align-middle">
           <thead class="text-dark align-middle">
             <tr>
+              <th scope="col">NOMBRE DE PUESTO</th>
               <th scope="col">TESTIGOS</th>
               <th scope="col">POR ASIGNAR</th>
               <th scope="col"></th>
@@ -50,22 +51,20 @@
           <tbody>
             <tr class="bg-white" *ngFor="let state of dataStateStation">
               <td
-                [ngClass]="
-                  textColor(
-                    state.testigos.testigos_con_mesa,
-                    state.testigos.cantidad_testigos_necesitados
-                  )
-                "
               >
-                {{ state.testigos.testigos_con_mesa }}/{{
+                {{ state.nombre }}
+              </td>
+              <td
+                [ngClass]="textColor(
+                  state.testigos.testigos_con_mesa,
                   state.testigos.cantidad_testigos_necesitados
-                }}
-                {{
-                  createPercent(
-                    state.testigos.testigos_con_mesa,
-                    state.testigos.cantidad_testigos_necesitados
-                  )
-                }}
+                )"
+              >
+                {{ state.testigos.testigos_con_mesa }}/{{ state.testigos.cantidad_testigos_necesitados }}
+                {{ createPercent(
+                  state.testigos.testigos_con_mesa,
+                  state.testigos.cantidad_testigos_necesitados
+                ) }}
               </td>
               <td>
                 {{ state.testigos.testigos_sin_mesa }}
@@ -83,6 +82,9 @@
                 </button>
               </td>
             </tr>
+            <button class="btn btn-primary" (click)="loadAllPuestosData()">
+              Cargar Todos los Puestos
+            </button>
           </tbody>
         </table>
       </div>
@@ -91,57 +93,6 @@
           No hay estadísticas de equipo actualmente.
         </p>
       </ng-template>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="state"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Estadísticas de equipo
-        </h5>
-        <button
-          type="button"
-          class="btn"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fa-solid fa-xmark text-white"></i>
-        </button>
-      </div>
-      <div class="modal-body" *ngIf="stateActual.testigos">
-        <h4 class="fw-bolder">Información de testigos</h4>
-        <div class="row mt-3">
-          <div class="col-6">
-            <p>
-              <span class="fw-bolder">Con mesa: </span
-              ><span> {{ stateActual.testigos.testigos_con_mesa }}</span>
-            </p>
-          </div>
-          <div class="col-6">
-            <p>
-              <span class="fw-bolder">Sin mesa: </span
-              ><span> {{ stateActual.testigos.testigos_sin_mesa }}</span>
-            </p>
-          </div>
-          <div class="col-6">
-            <p>
-              <span class="fw-bolder">Necesarios: </span
-              ><span>
-                {{ stateActual.testigos.cantidad_testigos_necesitados }}</span
-              >
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
